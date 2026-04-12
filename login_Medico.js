@@ -27,15 +27,22 @@ document.addEventListener("DOMContentLoaded", function() {
             // DEFINIMOS EL USUARIO Y CONTRASEÑA PREDETERMINADOS
             const usuarioCorrecto = "admin";
             const passwordCorrecto = "1234";
+            const usuarioCorrecto2 = "JGUERRA";
+            const passwordCorrecto2 = "1234";
 
             // Comparamos si lo que escribió coincide con las credenciales correctas
             if(user === usuarioCorrecto && pass === passwordCorrecto) {
                 alert("¡Bienvenido, acceso concedido!");
                 
                 // Si es correcto, lo mandamos al archivo de la agenda
-                // (Ojo: Asegúrate de que el nombre sea exactamente el de tu archivo)
                 window.location.href = "agenda_Medico.html"; 
                 
+            } else if(user === usuarioCorrecto2 && pass === passwordCorrecto2) {
+                alert("¡Bienvenido, acceso concedido!");
+                
+                // Si es correcto, lo mandamos al archivo de la agenda
+                window.location.href = "agenda_Medico.html";
+
             } else {
                 // Si se equivoca, le mostramos un error
                 alert("Usuario o contraseña incorrectos. Pista: Usa 'admin' y '1234'");
