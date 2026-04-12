@@ -399,3 +399,47 @@ html {
 .services-bg {
   background: #f8fafc;
 }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación de flotación suave */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Aplicar animaciones al Hero (index.html) */
+.hero-title { animation: fadeInUp 0.6s ease-out forwards; }
+.hero-desc { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; animation-delay: 0.1s; }
+.hero-stats { animation: fadeInUp 1s ease-out forwards; opacity: 0; animation-delay: 0.2s; }
+
+.hero-img-col img {
+    animation: float 6s ease-in-out infinite;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* Sombra para dar profundidad */
+}
+
+/* Mejorar el efecto Hover de las tarjetas (Servicios y Menú Médico) */
+.service-card, .card-menu {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid transparent;
+}
+
+.service-card:hover, .card-menu:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(44, 123, 229, 0.15) !important;
+    border-color: rgba(44, 123, 229, 0.3); /* Borde sutil al pasar el mouse */
+}
+
+/* Transición suave para cambiar entre Dashboard y Citas */
+#dashboard, #vistaCitas {
+    transition: opacity 0.4s ease-in-out;
+}
+.section-hidden {
+    display: none !important;
+    opacity: 0;
+}

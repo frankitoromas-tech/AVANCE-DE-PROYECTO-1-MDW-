@@ -49,4 +49,23 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
+    // Función para cambiar entre Login y Registro
+function switchTab(tab) {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+
+    if (tab === 'login') {
+        loginForm.classList.remove('d-none');
+        registerForm.classList.add('d-none');
+        tabLogin.classList.add('is-active');
+        tabRegister.classList.remove('is-active');
+    } else {
+        loginForm.classList.add('d-none');
+        registerForm.classList.remove('d-none');
+        tabLogin.classList.remove('is-active');
+        tabRegister.classList.add('is-active');
+    }
+}
 });
