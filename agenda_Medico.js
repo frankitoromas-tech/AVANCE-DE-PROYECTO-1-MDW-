@@ -61,3 +61,10 @@ document.getElementById('formCita').addEventListener('submit', function(e) {
     // Limpiar formulario
     this.reset();
 });
+// Simulación para el formulario de Paciente
+document.getElementById('formPaciente').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert("Paciente registrado con éxito.");
+    bootstrap.Modal.getInstance(document.getElementById('modalPaciente')).hide();
+    this.reset();
+});
