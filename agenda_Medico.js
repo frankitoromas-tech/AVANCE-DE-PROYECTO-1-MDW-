@@ -36,7 +36,7 @@ document.getElementById('formCita').addEventListener('submit', function(e) {
     const nuevaCitaHTML = `
         <div class="col" style="animation: fadeInUp 0.5s ease-out forwards;">
             <div class="card h-100 shadow-sm border-0 border-start border-success border-4">
-                <img src="https://via.placeholder.com/150/00b8a9/ffffff?text=Nuevo+Paciente" class="card-img-top" alt="Paciente">
+                <img src="https://ui-avatars.com/api/?name=Paciente+Nuevo&background=10b981&color=fff&size=150" class="card-img-top" alt="Paciente">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Paciente Nuevo</h5>
                     <p class="card-text mb-1 small"><strong>Estado:</strong> Registrado hoy</p>
