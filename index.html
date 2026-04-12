@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediCare | Inicio</title>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <!-- Bootstrap 5.3.8 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body data-page="home">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-2 navbar-shadow">
+        <div class="container">
+
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="index.html">
+                <span class="brand-logo"><i class="bi bi-stethoscope"></i></span>
+                <span class="brand-text">Clinica<span>Lima</span></span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false"
+                aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navPrincipal">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active px-3" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#">Citas</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#nosotros">Nosotros</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-primary px-4" href="#">Ingresar / Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="inicio">
+        <div class="row g-0 hero-row">
+
+            <div class="col-lg-7 d-flex align-items-center">
+                <div class="container py-5 py-lg-0">
+                    <div class="ps-lg-3">
+
+                        <span class="hero-badge mb-4 d-inline-flex">Atención médica premium 24/7</span>
+
+                        <h1 class="fw-bold mb-4 hero-title">
+                            Tu Salud,<br>Nuestra <span class="text-primary">Prioridad</span>
+                        </h1>
+
+                        <p class="lead text-secondary mb-4 hero-desc">
+                            Experimenta atención médica de primer nivel con nuestras instalaciones modernas
+                            y especialistas altamente calificados. Reserva tu cita hoy para un mañana más saludable.
+                        </p>
+
+                        <div class="d-flex flex-column flex-sm-row gap-3 mb-5">
+                            <a href="#" class="btn btn-primary btn-lg px-4">Reservar cita</a>
+                            <a href="#servicios" class="btn btn-outline-primary btn-lg px-4">Conocer más</a>
+                        </div>
+
+                        <div class="row g-3 hero-stats">
+                            <div class="col-12 col-sm-4">
+                                <div class="metric-chip">
+                                    <span class="stat-icon stat-icon-blue"><i class="bi bi-people-fill"></i></span>
+                                    <div>
+                                        <strong>10 000+</strong>
+                                        <span>Pacientes atendidos</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="metric-chip">
+                                    <span class="stat-icon stat-icon-teal"><i class="bi bi-stethoscope"></i></span>
+                                    <div>
+                                        <strong>50+</strong>
+                                        <span>Médicos especialistas</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="metric-chip">
+                                    <span class="stat-icon stat-icon-amber"><i class="bi bi-patch-plus-fill"></i></span>
+                                    <div>
+                                        <strong>15 años</strong>
+                                        <span>Experiencia clínica</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 hero-img-col d-none d-lg-block">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=80"
+                    alt="Recepción de la clínica" />
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SERVICIOS SECTION -->
+    <main>
+        <section class="services-bg py-5" id="servicios">
+            <div class="container py-lg-4">
+
+                <div class="text-center mb-5">
+                    <span class="section-kicker">Nuestros Servicios</span>
+                    <h2 class="fw-bold mt-2 mb-3 section-title">Dedicados a Tu Bienestar</h2>
+                    <p class="text-secondary mx-auto section-desc">
+                        Ofrecemos una amplia gama de servicios médicos para garantizar que tú y tu familia
+                        reciban la mejor atención posible.
+                    </p>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-blue"><i class="bi bi-stethoscope"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Medicina General</h3>
+                            <p class="text-secondary small mb-3">Atención preventiva y seguimiento integral para
+                                mantener tu salud
+                                óptima.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-yellow"><i class="bi bi-emoji-smile"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Pediatría</h3>
+                            <p class="text-secondary small mb-3">Atención especializada e inmunizaciones para bebés,
+                                niños y
+                                adolescentes.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-red"><i class="bi bi-heart-pulse"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Cardiología</h3>
+                            <p class="text-secondary small mb-3">Diagnóstico y tratamiento experto de enfermedades
+                                cardíacas y
+                                cardiovasculares.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-pink"><i class="bi bi-person-heart"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Ginecología</h3>
+                            <p class="text-secondary small mb-3">Servicios integrales de salud femenina, desde controles
+                                rutinarios
+                                hasta atención especializada.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-teal"><i class="bi bi-apple"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Nutrición</h3>
+                            <p class="text-secondary small mb-3">Planes dietéticos personalizados y asesoramiento
+                                nutricional para un
+                                bienestar óptimo.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card service-card border-0 h-100 p-4">
+                            <span class="service-icon service-purple"><i class="bi bi-brain"></i></span>
+                            <h3 class="h5 mt-4 mb-2">Psicología</h3>
+                            <p class="text-secondary small mb-3">Apoyo en salud mental, terapia y evaluaciones
+                                psicológicas realizadas
+                                por expertos.</p>
+                            <a href="#" class="text-primary fw-semibold text-decoration-none small">Saber más
+                                →</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- NOSOTROS SECTION -->
+        <section class="py-5 bg-white" id="nosotros">
+            <div class="container py-lg-4">
+                <div class="row align-items-center g-5">
+
+                    <div class="col-lg-6">
+                        <div class="about-img-wrap">
+                            <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=900&q=80"
+                                alt="Equipo quirúrgico" />
+                            <div class="about-overlay-card">
+                                <h4>¿Por qué elegirnos?</h4>
+                                <p>Combinamos tecnología de punta con atención compasiva para lograr los mejores
+                                    resultados en salud.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <span class="section-kicker">Sobre Lima Salud</span>
+                        <h2 class="fw-bold mt-2 mb-3 section-title">Un Legado de Excelencia en Salud</h2>
+                        <p class="text-secondary mb-4 about-desc">
+                            Fundada con la misión de hacer accesible la atención médica de calidad, Lima Salud
+                            ha crecido hasta convertirse en una red clínica líder. Nuestro enfoque se centra
+                            en la comodidad del paciente, el diagnóstico avanzado y los planes de tratamiento
+                            integrales.
+                        </p>
+
+                        <div class="mb-4">
+                            <div class="check-item">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Equipamiento médico de última generación</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Especialistas con reconocimiento internacional</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Atención de urgencias las 24 horas</span>
+                            </div>
+                        </div>
+
+                        <a href="#" class="btn btn-dark btn-lg px-4">Conoce a nuestros médicos</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer-shell pt-5 pb-4">
+        <div class="container">
+            <div class="row g-5">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-logo"><i class="bi bi-stethoscope"></i></span>
+                        <span class="brand-text text-white">Clinica<span>Lima</span></span>
+                    </div>
+                    <p class="footer-desc">
+                        Servicios de salud de primer nivel con compasión, excelencia y un enfoque centrado en el
+                        paciente.
+                    </p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-btn" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h4 class="footer-col-title">Accesos rápidos</h4>
+                    <a href="#inicio" class="footer-link-item">Inicio</a>
+                    <a href="#servicios" class="footer-link-item">Servicios</a>
+                    <a href="#nosotros" class="footer-link-item">Nosotros</a>
+                    <a href="#" class="footer-link-item">Trabaja con nosotros</a>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="footer-col-title">Nuestros Servicios</h4>
+                    <a href="#" class="footer-link-item">Medicina General</a>
+                    <a href="#" class="footer-link-item">Pediatría</a>
+                    <a href="#" class="footer-link-item">Cardiología</a>
+                    <a href="#" class="footer-link-item">Ginecología</a>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="footer-col-title">Contacto</h4>
+                    <div class="footer-contact-row">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span>Av. Javier Prado Este 2450,<br>San Borja, Lima</span>
+                    </div>
+                    <div class="footer-contact-row">
+                        <i class="bi bi-telephone-fill"></i>
+                        <span>+51 (01) 234-5678</span>
+                    </div>
+                    <div class="footer-contact-row">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>contacto@clinicalima.pe</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="footer-divider mt-4" />
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <p class="footer-copy">© <span class="js-current-year"></span> ClinicaLima Salud. Todos los derechos
+                    reservados.
+                </p>
+                <div class="footer-legal d-flex gap-3">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Términos de uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
