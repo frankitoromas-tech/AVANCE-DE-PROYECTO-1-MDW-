@@ -1,10 +1,8 @@
-/* Restablecemos fuentes por si acaso */
 body {
     font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Evita scroll horizontal */
+    overflow-x: hidden;
 }
 
-/* Configuración para que la imagen cubra perfectamente su lado */
 .bg-image-container {
     height: 100vh;
     position: relative;
@@ -16,7 +14,6 @@ body {
     object-fit: cover;
 }
 
-/* El color azul específico de tu botón */
 .custom-btn {
     background-color: #2563eb;
     border: none;
@@ -27,12 +24,11 @@ body {
     background-color: #1e40af;
 }
 
-/* Para quitar el borde azul intenso que pone Bootstrap por defecto al hacer clic en un input, opcional */
 .form-control:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
 }
-/* Animación para los formularios al cambiar de pestaña */
+
 #loginForm, #registerForm {
     animation: fadeInForm 0.4s ease-in-out forwards;
 }
@@ -41,14 +37,14 @@ body {
     from { opacity: 0; transform: translateX(-10px); }
     to { opacity: 1; transform: translateX(0); }
 }
-/* Estilo moderno para inputs al hacer clic */
+
 .form-control:focus, .form-select:focus {
     border-color: #2563eb !important;
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15) !important;
     background-color: #f8fafc; /* Un fondo ligeramente gris al escribir */
     transition: all 0.3s ease;
 }
-/* Scrollbar personalizado */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
