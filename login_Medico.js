@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. Lógica para el botón de mostrar/ocultar contraseña
     const togglePassword = document.querySelector("#togglePassword");
     const password = document.querySelector("#password");
 
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // 2. Lógica de Simulación de Login
     const loginForm = document.getElementById('loginForm');
     
     if(loginForm) {
@@ -30,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert("¡Bienvenido, acceso concedido!");
                 window.location.href = "agenda_Medico.html"; 
             } else {
-                alert("Usuario o contraseña incorrectos. Pista: Usa 'admin' y '1234'");
+                alert("Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.");
             }
         });
     }
-}); // <-- AQUÍ TERMINA EL EVENT LISTENER PRINCIPAL
+});
 
-// 3. LA FUNCIÓN DEBE ESTAR AFUERA
+
 function switchTab(tab) {
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
