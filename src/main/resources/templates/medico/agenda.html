@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head :: common('Portal del Médico - Clínica Lima')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/agenda_Medico.css}">
+</head>
+<body class="bg-light" th:attr="data-vista-medico=${vistaMedico != null ? vistaMedico : 'dashboard'},data-toast=${toastMensaje}">
+
+    <nav class="navbar navbar-dark bg-primary shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#" data-medico-target="dashboard">
+                <i class="bi bi-hospital"></i> Clínica Lima - Portal Médico
+            </a>
+            <a class="btn btn-outline-light btn-sm" th:href="@{/usuarios/logout}">Cerrar Sesión</a>
+        </div>
+    </nav>
+
+    <main id="dashboard" class="container py-5 medico-section">
+        <h1 class="text-center mb-5 fw-bold" style="color: #1e3a8a;">Bienvenido al Portal del Médico</h1>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" data-bs-toggle="modal" data-bs-target="#modalPaciente">
+                    <div class="card-body py-5">
+                        <i class="bi bi-person-plus-fill text-primary" style="font-size: 4rem;"></i>
+                        <h3 class="card-title mt-3">Registrar Pacientes</h3>
+                        <p class="text-muted small">Añadir nuevos pacientes a la base de datos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" data-bs-toggle="modal" data-bs-target="#modalCita">
+                    <div class="card-body py-5">
+                        <i class="bi bi-calendar-event-fill text-success" style="font-size: 4rem;"></i>
+                        <h3 class="card-title mt-3">Registrar Citas</h3>
+                        <p class="text-muted small">Programar una nueva atención médica.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" data-medico-target="vistaCitas">
+                    <div class="card-body py-5">
+                        <i class="bi bi-clipboard2-pulse-fill text-info" style="font-size: 4rem;"></i>
+                        <h3 class="card-title mt-3">Citas Médicas</h3>
+                        <p class="text-muted small">Ver y gestionar la agenda del día.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="vistaCitas" class="container py-5 section-hidden medico-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold" style="color: #1e3a8a;">Citas Médicas</h2>
+            <button class="btn btn-secondary" type="button" data-medico-target="dashboard">Volver al Menú</button>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input id="filtroCitas" type="text" class="form-control border-start-0" placeholder="Buscar por paciente, DNI o sección...">
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4" id="listadoCitasMedico">
+            <div class="col cita-card" th:each="cita : ${citas}"
+                th:attr="data-search=${cita.nombrePaciente + ' ' + cita.dniPaciente + ' ' + cita.servicio}">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-img-top d-flex align-items-center justify-content-center py-4 bg-light border-bottom">
+                        <i class="bi bi-person-circle text-primary" style="font-size: 4.5rem;"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold" th:text="${cita.nombrePaciente}">Paciente</h5>
+                        <p class="card-text mb-1 small"><strong>DNI:</strong> <span th:text="${cita.dniPaciente}">00000000</span></p>
+                        <p class="card-text mb-1 small"><strong>Tel:</strong> <span th:text="${cita.telefonoPaciente}">999 999 999</span></p>
+                        <p class="card-text mb-1 small"><strong>Correo:</strong> <span th:text="${cita.correoPaciente}">correo@mail.com</span></p>
+                        <hr>
+                        <span class="badge" th:classappend="${cita.servicio == 'Cardiología' ? 'bg-primary' : (cita.servicio == 'Pediatría' ? 'bg-success' : (cita.servicio == 'Traumatología' ? 'bg-warning text-dark' : 'bg-danger'))}" th:text="${cita.servicio}">Especialidad</span>
+                        <p class="mt-2 fw-bold text-primary"><i class="bi bi-clock"></i> <span th:text="${cita.horaSlot}">09:00 AM</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalPaciente" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Nuevo Registro de Paciente</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formPaciente" th:action="@{/pacientes/registrar}" th:object="${pacienteForm}" method="post">
+                        <div class="mb-3"><label class="form-label">Nombre Completo</label><input type="text" class="form-control" th:field="*{nombre}" required></div>
+                        <div class="mb-3"><label class="form-label">DNI</label><input type="number" class="form-control" th:field="*{dni}" required></div>
+                        <div class="mb-3"><label class="form-label">Correo</label><input type="email" class="form-control" th:field="*{correo}" required></div>
+                        <div class="mb-3"><label class="form-label">Teléfono</label><input type="text" class="form-control" th:field="*{telefono}"></div>
+                        <div class="mb-3"><label class="form-label">Edad</label><input type="number" class="form-control" th:field="*{edad}"></div>
+                        <div class="mb-3"><label class="form-label">Parentesco</label><input type="text" class="form-control" th:field="*{parentesco}" value="Titular"></div>
+                        <button type="submit" class="btn btn-primary w-100">Guardar Paciente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCita" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Programar Cita</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCita" th:action="@{/medico/citas}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Elegir Paciente</label>
+                            <select class="form-select" name="pacienteId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="paciente : ${pacientes}" th:value="${paciente.id}" th:text="${paciente.nombre + ' - DNI ' + paciente.dni}">Paciente</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Sección/Especialidad</label>
+                            <select class="form-select" name="servicioId" required>
+                                <option value="">Seleccione...</option>
+                                <option th:each="servicio : ${servicios}" th:value="${servicio.id}" th:text="${servicio.nombre}">Servicio</option>
+                            </select>
+                        </div>
+                        <div class="mb-3"><label class="form-label">Fecha y Hora</label><input type="datetime-local" class="form-control" name="fechaHora" required></div>
+                        <button type="submit" class="btn btn-success w-100">Registrar Cita</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 2000">
+        <div id="toastExito" class="toast text-bg-success border-0" role="alert">
+            <div class="d-flex align-items-center p-2">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <span id="toastMsg" th:text="${toastMensaje != null ? toastMensaje : 'Operación completada'}">Operación completada</span>
+                <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/scripts :: bootstrap}"></div>
+    <script th:src="@{/js/agenda-medico.js}"></script>
+</body>
+</html>
