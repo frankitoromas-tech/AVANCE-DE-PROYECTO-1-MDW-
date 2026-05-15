@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Paciente | Clinica Lima</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/portal_Paciente.css}">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-dark bg-primary shadow">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/portal-paciente}">
+            <i class="bi bi-hospital"></i> Clinica Lima - Portal Paciente
+        </a>
+        <form th:action="@{/logout}" method="post" class="mb-0">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesion</button>
+        </form>
+    </div>
+</nav>
+
+<main class="container py-4">
+    <div th:if="${mensajeExito}" class="alert alert-success" th:text="${mensajeExito}"></div>
+    <div th:if="${mensajeError}" class="alert alert-danger" th:text="${mensajeError}"></div>
+
+    <section id="dashboard" data-section>
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-lg-8">
+                <h1 class="fw-bold mb-1" style="color: #1e3a8a;" th:text="'Bienvenido, ' + ${paciente.nombreCompleto}">Bienvenido</h1>
+                <p class="text-muted mb-0">DNI <span th:text="${paciente.dni}">00000000</span> · <span th:text="${paciente.correo}">correo</span></p>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted small">Citas registradas</span>
+                            <h3 class="fw-bold mb-0" th:text="${#lists.size(citas)}">0</h3>
+                        </div>
+                        <i class="bi bi-calendar-check text-primary fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" data-bs-toggle="modal" data-bs-target="#modalCita">
+                    <div class="card-body py-5">
+                        <i class="bi bi-calendar-plus fs-1 text-primary"></i>
+                        <h3 class="card-title mt-3">Registrar Cita</h3>
+                        <p class="text-muted small">Solicita una nueva cita medica</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" onclick="mostrarSeccion('servicios')">
+                    <div class="card-body py-5">
+                        <i class="bi bi-hospital fs-1 text-primary"></i>
+                        <h3 class="card-title mt-3">Servicios</h3>
+                        <p class="text-muted small">Conoce las especialidades disponibles</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow card-menu" onclick="mostrarSeccion('misCitas')">
+                    <div class="card-body py-5">
+                        <i class="bi bi-clipboard2-check fs-1 text-primary"></i>
+                        <h3 class="card-title mt-3">Mis Citas</h3>
+                        <p class="text-muted small">Ve y gestiona tus citas registradas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" data-section class="section-hidden">
+        <button class="btn btn-secondary mb-3" onclick="mostrarSeccion('dashboard')">
+            <i class="bi bi-arrow-left"></i> Volver
+        </button>
+        <h3 class="fw-bold">Servicios Disponibles</h3>
+        <div class="row g-4 mt-1">
+            <div class="col-md-6 col-lg-3" th:each="servicio : ${servicios}">
+                <div class="card h-100 overflow-hidden border-0 shadow-sm">
+                    <img th:src="${servicio.imagen}" th:alt="${servicio.nombre}" style="aspect-ratio: 16/9; object-fit: cover;">
+                    <div class="p-3">
+                        <i class="bi text-primary fs-3" th:classappend="${servicio.icono}"></i>
+                        <h5 class="fw-bold mt-2" th:text="${servicio.nombre}">Servicio</h5>
+                        <p class="text-muted small" th:text="${servicio.descripcion}">Descripcion</p>
+                        <button class="btn btn-primary mt-1 w-100" data-bs-toggle="modal" data-bs-target="#modalCita">Solicitar cita</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="misCitas" data-section class="section-hidden">
+        <button class="btn btn-secondary mb-3" onclick="mostrarSeccion('dashboard')">
+            <i class="bi bi-arrow-left"></i> Volver
+        </button>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold mb-0">Mis Citas</h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCita">
+                <i class="bi bi-plus-circle"></i> Nueva cita
+            </button>
+        </div>
+
+        <div th:if="${#lists.isEmpty(citas)}" class="text-center text-muted py-5">
+            <i class="bi bi-calendar-x" style="font-size:3rem"></i>
+            <p class="mt-2">No tienes citas registradas aun.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3" th:each="cita : ${citas}">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold small" th:text="${cita.servicioNombre}">Cardiologia</span>
+                        <span class="badge bg-white text-primary" th:text="${cita.modalidad}">Presencial</span>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title mb-1" th:text="${cita.pacienteNombre}">Paciente</h6>
+                        <p class="text-muted small mb-1">DNI: <span th:text="${cita.dni}">00000000</span> | Edad: <span th:text="${cita.edad}">0</span></p>
+                        <p class="small mb-1"><i class="bi bi-person-badge"></i> <span th:text="${cita.medico}">Medico</span></p>
+                        <p class="small mb-0"><i class="bi bi-clock"></i> <span th:text="${cita.dia}">Lunes</span> · <span th:text="${cita.hora}">08:00</span></p>
+                    </div>
+                    <div class="card-footer d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary flex-fill" data-bs-toggle="modal" th:data-bs-target="'#detalleCita' + ${cita.id}">
+                            <i class="bi bi-info-circle"></i> Ver detalle
+                        </button>
+                        <form th:action="@{/citas/{id}/cancelar(id=${cita.id})}" method="post" class="flex-fill" onsubmit="return confirm('Deseas cancelar esta cita?');">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <button class="btn btn-sm btn-outline-danger w-100" type="submit"><i class="bi bi-trash"></i> Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal fade" th:id="'detalleCita' + ${cita.id}" tabindex="-1">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title"><i class="bi bi-clipboard2-pulse"></i> Detalle de Cita</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered table-sm mb-0">
+                                    <tr><td class="text-muted" style="width:40%">Paciente</td><td><strong th:text="${cita.pacienteNombre}">Paciente</strong></td></tr>
+                                    <tr><td class="text-muted">DNI</td><td th:text="${cita.dni}">DNI</td></tr>
+                                    <tr><td class="text-muted">Edad</td><td th:text="${cita.edad} + ' anos'">Edad</td></tr>
+                                    <tr><td class="text-muted">Parentesco</td><td th:text="${cita.parentesco}">Titular</td></tr>
+                                    <tr><td class="text-muted">Servicio</td><td th:text="${cita.servicioNombre}">Servicio</td></tr>
+                                    <tr><td class="text-muted">Medico</td><td th:text="${cita.medico}">Medico</td></tr>
+                                    <tr><td class="text-muted">Dia</td><td th:text="${cita.dia}">Dia</td></tr>
+                                    <tr><td class="text-muted">Horario</td><td th:text="${cita.hora}">Hora</td></tr>
+                                    <tr><td class="text-muted">Modalidad</td><td><span class="badge bg-success" th:text="${cita.modalidad}">Presencial</span></td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="modal fade" id="modalCita" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <div>
+                    <h5 class="mb-0">Registrar Cita Medica</h5>
+                    <small class="opacity-75">Datos enviados al backend Spring</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light border">
+                    <strong th:text="${paciente.nombreCompleto}">Paciente</strong><br>
+                    <span class="small text-muted">DNI <span th:text="${paciente.dni}">00000000</span> · <span th:text="${paciente.telefono}">Telefono</span></span>
+                </div>
+                <form th:action="@{/citas}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <label class="form-label fw-semibold">Horario disponible</label>
+                    <select class="form-select" name="horarioId" required>
+                        <option value="">Seleccione especialidad, medico y horario...</option>
+                        <option th:each="horario : ${horarios}"
+                                th:value="${horario.id}"
+                                th:text="${horario.servicioNombre + ' - ' + horario.nombreMedico + ' | ' + horario.dia + ' ' + horario.hora + ' (' + horario.modalidad + ')'}">
+                            Cardiologia - Dr. Perez | Lunes 08:00
+                        </option>
+                    </select>
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Confirmar Cita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/portal.js}"></script>
+</body>
+</html>

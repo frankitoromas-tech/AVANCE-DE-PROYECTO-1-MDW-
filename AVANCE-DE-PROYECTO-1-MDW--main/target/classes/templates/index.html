@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lima Salud | Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body data-page="home">
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-2 navbar-shadow">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/Imagenes/Logo.png}" alt="Logo Clinica Lima" style="height: 50px; object-fit: contain;">
+        </a>
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-controls="navPrincipal" aria-expanded="false" aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navPrincipal">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active px-3" href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link px-3" href="#servicios">Servicios</a></li>
+                <li class="nav-item"><a class="nav-link px-3" th:href="@{/portal-paciente}">Citas</a></li>
+                <li class="nav-item"><a class="nav-link px-3" href="#nosotros">Nosotros</a></li>
+                <li class="nav-item ms-lg-2" sec:authorize="isAnonymous()">
+                    <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#modalSeleccionRol">Ingresar / Registrarse</button>
+                </li>
+                <li class="nav-item ms-lg-2" sec:authorize="isAuthenticated()">
+                    <a class="btn btn-primary px-4" th:href="@{/redirigir}">Ir al portal</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section" id="inicio">
+    <div class="row g-0 hero-row">
+        <div class="col-lg-7 d-flex align-items-center">
+            <div class="container py-5 py-lg-0">
+                <div class="ps-lg-3">
+                    <span class="hero-badge mb-4 d-inline-flex">Atencion Medica 24/7</span>
+                    <h1 class="fw-bold mb-4 hero-title">Tu Salud,<br>Nuestra <span class="text-primary">Prioridad</span></h1>
+                    <p class="lead text-secondary mb-4 hero-desc">
+                        Gestiona tus citas medicas en una plataforma web segura, organizada y preparada para pacientes y personal clinico.
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 mb-5">
+                        <a th:href="@{/portal-paciente}" class="btn btn-primary btn-lg px-4">Reservar cita</a>
+                        <a href="#servicios" class="btn btn-outline-primary btn-lg px-4">Conocer mas</a>
+                    </div>
+                    <div class="row g-3 hero-stats">
+                        <div class="col-12 col-sm-4">
+                            <div class="metric-chip">
+                                <span class="stat-icon stat-icon-blue"><i class="bi bi-people-fill"></i></span>
+                                <div><strong th:text="${totalPacientes} + '+'">4+</strong><span>Pacientes</span></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="metric-chip">
+                                <span class="stat-icon stat-icon-teal"><i class="bi bi-stethoscope"></i></span>
+                                <div><strong th:text="${totalServicios}">4</strong><span>Servicios</span></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="metric-chip">
+                                <span class="stat-icon stat-icon-amber"><i class="bi bi-calendar-check"></i></span>
+                                <div><strong th:text="${totalCitas}">4</strong><span>Citas</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 hero-img-col d-none d-lg-block">
+            <img th:src="@{/Imagenes/successful-medical-team.jpg.jpeg}" alt="Equipo medico de la clinica">
+        </div>
+    </div>
+</section>
+
+<section id="servicios" class="services-bg py-5">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+            <div>
+                <span class="text-primary fw-semibold">Especialidades</span>
+                <h2 class="fw-bold mb-1">Servicios disponibles</h2>
+                <p class="text-secondary mb-0">La oferta se renderiza desde la logica de negocio en memoria.</p>
+            </div>
+            <a class="btn btn-outline-primary" th:href="@{/portal-paciente}">Solicitar cita</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3" th:each="servicio : ${servicios}">
+                <div class="card service-card h-100 border-0 shadow-sm overflow-hidden">
+                    <img th:src="${servicio.imagen}" th:alt="${servicio.nombre}" style="height: 160px; object-fit: cover;">
+                    <div class="card-body">
+                        <i class="bi text-primary fs-3" th:classappend="${servicio.icono}"></i>
+                        <h5 class="fw-bold mt-2" th:text="${servicio.nombre}">Cardiologia</h5>
+                        <p class="text-muted small mb-0" th:text="${servicio.descripcion}">Descripcion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="nosotros" class="py-5 bg-white">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <div class="about-img-wrap">
+                    <img th:src="@{/Imagenes/sesiones-clinicas.jpg}" alt="Atencion clinica">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="text-primary fw-semibold">Clinica Lima Salud</span>
+                <h2 class="fw-bold mt-2">Gestion digital de citas para una atencion mas ordenada</h2>
+                <p class="text-secondary">
+                    El sistema integra front-end, backend, seguridad y renderizado dinamico con Spring Boot y Thymeleaf.
+                </p>
+                <div class="check-item"><i class="bi bi-check-circle-fill"></i><span>Registro de pacientes</span></div>
+                <div class="check-item"><i class="bi bi-check-circle-fill"></i><span>Gestion de citas medicas</span></div>
+                <div class="check-item"><i class="bi bi-check-circle-fill"></i><span>Acceso por roles</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-shell pt-5 pb-4 text-white">
+    <div class="container text-center">
+        <p class="mb-0">© 2026 Clinica Lima Salud. Proyecto academico de Marcos de Desarrollo Web.</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="modalSeleccionRol" tabindex="-1" aria-labelledby="modalRolLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-bottom-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-5 pb-5 pt-0 text-center">
+                <h3 class="fw-bold mb-2" id="modalRolLabel">Bienvenido a Clinica Lima</h3>
+                <p class="text-muted mb-4">Selecciona tu perfil para continuar</p>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" th:href="@{/portal-paciente}">
+                            <div class="card h-100 role-card bg-light border-0">
+                                <div class="card-body py-4">
+                                    <i class="bi bi-person-heart text-danger mb-3 d-block" style="font-size: 3rem;"></i>
+                                    <h5 class="card-title fw-bold">Soy Paciente</h5>
+                                    <p class="card-text small text-muted">Reserva citas y revisa tu historial.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" th:href="@{/login}">
+                            <div class="card h-100 role-card bg-light border-0">
+                                <div class="card-body py-4">
+                                    <i class="bi bi-heart-pulse-fill text-primary mb-3 d-block" style="font-size: 3rem;"></i>
+                                    <h5 class="card-title fw-bold">Soy Medico</h5>
+                                    <p class="card-text small text-muted">Gestiona pacientes y agenda.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" th:href="@{/login}">
+                            <div class="card h-100 role-card bg-light border-0">
+                                <div class="card-body py-4">
+                                    <i class="bi bi-shield-lock-fill text-dark mb-3 d-block" style="font-size: 3rem;"></i>
+                                    <h5 class="card-title fw-bold">Administrador</h5>
+                                    <p class="card-text small text-muted">Administra servicios y accesos.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
