@@ -1,0 +1,11 @@
+# Configuración para Railway (repo con pom.xml en la raíz).
+# En el panel de Railway: Settings → elimina "Root Directory" (déjalo vacío).
+
+[build]
+builder = "RAILPACK"
+buildCommand = "mvn -B -DskipTests clean package"
+
+[deploy]
+startCommand = "java -jar target/lima-salud-0.0.1-SNAPSHOT.jar"
+healthcheckPath = "/"
+restartPolicyType = "ON_FAILURE"
