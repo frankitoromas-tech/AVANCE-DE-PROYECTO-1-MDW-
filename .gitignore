@@ -25,6 +25,5 @@ buildNumber.properties
 .settings/
 .vscode/
 
-# OS
-.DS_Store
-Thumbs.db
+# Config local (opcional, no subir claves reales)
+src/main/resources/application-local.properties

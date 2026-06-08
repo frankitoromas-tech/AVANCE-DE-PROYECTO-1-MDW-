@@ -1,6 +1,6 @@
 package com.clinica.limasalud.controller;
 
-import com.clinica.limasalud.model.RegistroUsuarioForm;
+import com.clinica.limasalud.dto.RegistroUsuarioForm;
 import com.clinica.limasalud.service.ClinicaService;
 import com.clinica.limasalud.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -32,7 +32,7 @@ public class UsuarioController {
         model.addAttribute("totalPacientes", clinicaService.totalPacientes());
         model.addAttribute("totalCitas", clinicaService.totalCitas());
         model.addAttribute("totalServicios", clinicaService.listarServicios().size());
-        return "index";
+        return "public/index";
     }
 
     @GetMapping("/login")
@@ -47,7 +47,7 @@ public class UsuarioController {
         model.addAttribute("mostrarRegistro", model.containsAttribute("mostrarRegistro"));
         model.addAttribute("errorLogin", error != null);
         model.addAttribute("logoutOk", logout != null);
-        return "login";
+        return "auth/login";
     }
 
     @PostMapping("/usuarios/registrar")

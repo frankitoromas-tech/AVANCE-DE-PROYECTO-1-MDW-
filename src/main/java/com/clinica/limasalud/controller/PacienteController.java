@@ -1,9 +1,10 @@
 package com.clinica.limasalud.controller;
 
-import com.clinica.limasalud.model.Paciente;
-import com.clinica.limasalud.model.PacienteForm;
-import com.clinica.limasalud.model.ServicioForm;
-import com.clinica.limasalud.model.Usuario;
+import com.clinica.limasalud.dto.CitaForm;
+import com.clinica.limasalud.entity.Paciente;
+import com.clinica.limasalud.dto.PacienteForm;
+import com.clinica.limasalud.dto.ServicioForm;
+import com.clinica.limasalud.entity.Usuario;
 import com.clinica.limasalud.service.ClinicaService;
 import com.clinica.limasalud.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -45,7 +46,7 @@ public class PacienteController {
         model.addAttribute("servicios", clinicaService.listarServicios());
         model.addAttribute("horarios", clinicaService.listarHorarios());
         model.addAttribute("citas", clinicaService.listarCitasPorPaciente(paciente.getId()));
-        return "portal-paciente";
+        return "paciente/portal";
     }
 
     @PostMapping("/citas")
@@ -81,8 +82,12 @@ public class PacienteController {
             return "redirect:/portal-paciente";
         }
 
-        clinicaService.cancelarCita(id);
-        redirectAttributes.addFlashAttribute("mensajeExito", "Cita cancelada correctamente.");
+        try {
+            clinicaService.cancelarCita(id);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Cita cancelada correctamente.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+        }
         return esPersonalClinico(authentication) ? "redirect:/medico/agenda" : "redirect:/portal-paciente";
     }
 
@@ -94,13 +99,16 @@ public class PacienteController {
         if (!model.containsAttribute("servicioForm")) {
             model.addAttribute("servicioForm", new ServicioForm());
         }
+        if (!model.containsAttribute("citaForm")) {
+            model.addAttribute("citaForm", new CitaForm());
+        }
         model.addAttribute("pacientes", clinicaService.listarPacientes());
         model.addAttribute("servicios", clinicaService.listarServicios());
         model.addAttribute("horarios", clinicaService.listarHorarios());
         model.addAttribute("citas", clinicaService.listarCitas());
         model.addAttribute("totalPacientes", clinicaService.totalPacientes());
         model.addAttribute("totalCitas", clinicaService.totalCitas());
-        return "agenda-medico";
+        return "medico/agenda";
     }
 
     @PostMapping("/pacientes")
@@ -116,22 +124,134 @@ public class PacienteController {
             return "redirect:/medico/agenda";
         }
 
-        clinicaService.registrarPaciente(form);
-        redirectAttributes.addFlashAttribute("mensajeExito", "Paciente registrado correctamente.");
+        try {
+            clinicaService.registrarPaciente(form);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Paciente registrado correctamente.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+        }
+        return "redirect:/medico/agenda";
+    }
+
+    @GetMapping("/pacientes/{id}/editar")
+    public String editarPaciente(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Paciente paciente = clinicaService.buscarPacientePorId(id).orElse(null);
+        if (paciente == null) {
+            redirectAttributes.addFlashAttribute("mensajeError", "Paciente no encontrado.");
+            return "redirect:/medico/agenda";
+        }
+
+        PacienteForm form = new PacienteForm();
+        form.setNombreCompleto(paciente.getNombreCompleto());
+        form.setDni(paciente.getDni());
+        form.setEdad(paciente.getEdad());
+        form.setParentesco(paciente.getParentesco());
+        form.setTelefono(paciente.getTelefono());
+        form.setCorreo(paciente.getCorreo());
+
+        model.addAttribute("pacienteId", id);
+        model.addAttribute("pacienteForm", form);
+        return "medico/paciente-form";
+    }
+
+    @PostMapping("/pacientes/{id}")
+    public String actualizarPaciente(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("pacienteForm") PacienteForm form,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("pacienteId", id);
+            return "medico/paciente-form";
+        }
+
+        try {
+            clinicaService.actualizarPaciente(id, form);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Paciente actualizado correctamente.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+            return "redirect:/pacientes/" + id + "/editar";
+        }
+        return "redirect:/medico/agenda";
+    }
+
+    @PostMapping("/pacientes/{id}/eliminar")
+    public String eliminarPaciente(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            clinicaService.eliminarPaciente(id);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Paciente eliminado correctamente.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+        }
         return "redirect:/medico/agenda";
     }
 
     @PostMapping("/medico/citas")
     public String registrarCitaMedico(
-            @RequestParam("pacienteId") Long pacienteId,
-            @RequestParam("horarioId") String horarioId,
+            @Valid @ModelAttribute("citaForm") CitaForm form,
+            BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.citaForm", bindingResult);
+            redirectAttributes.addFlashAttribute("citaForm", form);
+            redirectAttributes.addFlashAttribute("mensajeError", "Revisa los datos de la cita.");
+            return "redirect:/medico/agenda";
+        }
+
         try {
-            clinicaService.registrarCita(pacienteId, horarioId);
+            clinicaService.guardarCita(form);
             redirectAttributes.addFlashAttribute("mensajeExito", "Cita medica registrada correctamente.");
         } catch (IllegalArgumentException ex) {
             redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+        }
+        return "redirect:/medico/agenda";
+    }
+
+    @GetMapping("/citas/{id}/editar")
+    public String editarCita(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        var cita = clinicaService.buscarCitaPorId(id).orElse(null);
+        if (cita == null) {
+            redirectAttributes.addFlashAttribute("mensajeError", "Cita no encontrada.");
+            return "redirect:/medico/agenda";
+        }
+
+        CitaForm form = new CitaForm();
+        form.setId(cita.getId());
+        form.setPacienteId(cita.getPacienteId());
+        form.setHorarioId(cita.getHorario().getId());
+        form.setEstado(cita.getEstado());
+
+        model.addAttribute("citaForm", form);
+        model.addAttribute("pacientes", clinicaService.listarPacientes());
+        model.addAttribute("horarios", clinicaService.listarHorarios());
+        return "medico/cita-form";
+    }
+
+    @PostMapping("/citas/{id}")
+    public String actualizarCita(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("citaForm") CitaForm form,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+        form.setId(id);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("pacientes", clinicaService.listarPacientes());
+            model.addAttribute("horarios", clinicaService.listarHorarios());
+            return "medico/cita-form";
+        }
+
+        try {
+            clinicaService.guardarCita(form);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Cita actualizada correctamente.");
+        } catch (IllegalArgumentException ex) {
+            redirectAttributes.addFlashAttribute("mensajeError", ex.getMessage());
+            return "redirect:/citas/" + id + "/editar";
         }
         return "redirect:/medico/agenda";
     }

@@ -1,0 +1,24 @@
+# =============================================================================
+# Configuracion local de MySQL (cada desarrollador)
+# =============================================================================
+# 1. Copia este archivo como application-local.properties en esta misma carpeta:
+#      copy application-local.properties.example application-local.properties
+# 2. Reemplaza TU_CLAVE_AQUI por la contraseña de tu MySQL local (usuario root).
+# 3. NO subas application-local.properties a git (ya esta en .gitignore).
+# 4. Arranca la app: mvn spring-boot:run
+#
+# Hibernate crea la base de datos y las tablas automaticamente (ddl-auto=update).
+# =============================================================================
+
+MYSQLHOST=localhost
+MYSQLPORT=3306
+MYSQLDATABASE=lima_salud
+MYSQLUSER=root
+MYSQLPASSWORD=TU_CLAVE_AQUI
+
+spring.datasource.url=jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+spring.datasource.username=${MYSQLUSER}
+spring.datasource.password=${MYSQLPASSWORD}
+
+# Util durante desarrollo
+spring.jpa.show-sql=true

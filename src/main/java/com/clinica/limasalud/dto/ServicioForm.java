@@ -1,4 +1,4 @@
-package com.clinica.limasalud.model;
+package com.clinica.limasalud.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -11,7 +11,7 @@ public class ServicioForm {
     private String descripcion;
 
     private String icono = "bi-hospital";
-    private String imagen = "/Imagenes/sesiones-clinicas.jpg";
+    private String imagen = "/images/sesiones-clinicas.jpg";
 
     public String getNombre() {
         return nombre;

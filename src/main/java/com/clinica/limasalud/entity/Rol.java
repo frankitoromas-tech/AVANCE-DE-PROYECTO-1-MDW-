@@ -1,4 +1,4 @@
-package com.clinica.limasalud.model;
+package com.clinica.limasalud.entity;
 
 public enum Rol {
     PACIENTE,

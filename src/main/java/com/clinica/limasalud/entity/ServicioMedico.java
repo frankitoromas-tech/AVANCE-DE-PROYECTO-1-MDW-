@@ -1,13 +1,46 @@
-package com.clinica.limasalud.model;
+package com.clinica.limasalud.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "servicios")
 public class ServicioMedico {
 
+    @Id
+    @Column(length = 80)
     private String id;
+
+    @NotBlank
+    @Column(nullable = false)
     private String nombre;
+
+    @NotBlank
+    @Column(nullable = false, length = 500)
     private String descripcion;
+
+    @NotBlank
+    @Column(nullable = false, length = 50)
     private String icono;
+
+    @NotBlank
+    @Column(nullable = false)
     private String imagen;
-    private boolean activo;
+
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    @OneToMany(mappedBy = "servicio", fetch = FetchType.LAZY)
+    private List<HorarioMedico> horarios = new ArrayList<>();
 
     public ServicioMedico() {
     }
@@ -67,5 +100,13 @@ public class ServicioMedico {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public List<HorarioMedico> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<HorarioMedico> horarios) {
+        this.horarios = horarios;
     }
 }

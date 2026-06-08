@@ -1,4 +1,4 @@
-package com.clinica.limasalud.model;
+package com.clinica.limasalud.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
