@@ -52,6 +52,17 @@ Cada desarrollador configura **su propio MySQL local**. No compartas contraseña
 
 Mas detalle en [`database/README.md`](database/README.md).
 
+## Ejecutar sin MySQL (perfil `h2`, rapido para demo/pruebas)
+
+Si solo quieres **probar la app o generar evidencias** sin instalar ni configurar MySQL,
+usa el perfil `h2` (base de datos en memoria, con datos de ejemplo precargados):
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=h2
+```
+
+Abre http://localhost:8080. Los perfiles `local` y `prod` (MySQL) no se ven afectados.
+
 ## Verificar tablas en MySQL Workbench
 
 1. Conectate a tu instancia local de MySQL.

@@ -53,7 +53,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+        return usuarioRepository.findAllWithPaciente();
     }
 
     @Transactional(readOnly = true)
