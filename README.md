@@ -55,13 +55,31 @@ Mas detalle en [`database/README.md`](database/README.md).
 ## Ejecutar sin MySQL (perfil `h2`, rapido para demo/pruebas)
 
 Si solo quieres **probar la app o generar evidencias** sin instalar ni configurar MySQL,
-usa el perfil `h2` (base de datos en memoria, con datos de ejemplo precargados):
+usa el perfil `h2` (base de datos en memoria, con datos de ejemplo precargados).
 
-```bash
+**Forma facil (Windows)** — doble clic o desde cualquier terminal:
+
+```
+.\run-h2.bat
+```
+
+**Forma manual** — ojo con las comillas segun tu terminal:
+
+```powershell
+# PowerShell: las comillas son OBLIGATORIAS (si no, da "Unknown lifecycle phase .run.profiles=h2")
+mvn spring-boot:run "-Dspring-boot.run.profiles=h2"
+```
+
+```cmd
+:: CMD / simbolo del sistema (sin comillas funciona)
 mvn spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 
 Abre http://localhost:8080. Los perfiles `local` y `prod` (MySQL) no se ven afectados.
+
+> `mvn spring-boot:run` a secas usa el perfil `local` y **requiere** tu
+> `application-local.properties` con la clave de MySQL (ver seccion anterior); si no existe,
+> falla con *"Failed to configure a DataSource"*.
 
 ## Verificar tablas en MySQL Workbench
 
