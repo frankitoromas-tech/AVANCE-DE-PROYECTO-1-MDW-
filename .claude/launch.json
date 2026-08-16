@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Lima Salud (H2)",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "mvn spring-boot:run -Dspring-boot.run.profiles=h2"],
+      "port": 8080
+    }
+  ]
+}
